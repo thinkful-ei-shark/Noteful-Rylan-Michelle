@@ -12,6 +12,12 @@ export default class AddNote extends Component {
   }
   static contextType = ApiContext;
 
+  state = {
+    name: '',
+    message: 'Name is required for note. Validation Failed.',
+    isError: false
+  }
+
   handleSubmit = e => {
     e.preventDefault()
     const newNote = {

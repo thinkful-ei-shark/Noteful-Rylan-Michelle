@@ -65,14 +65,6 @@ class App extends Component {
     })
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
-    const name = event.target.name.value;
-  const password = event.target.password.value;
-  console.log('Name: ', name);
-  console.log('Password: ', password);
-    // process form values here
-  }
 
 
   renderNavRoutes() {

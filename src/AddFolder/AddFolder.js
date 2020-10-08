@@ -12,7 +12,9 @@ export default class AddFolder extends Component {
   }
   static contextType = ApiContext;
   state = {
-    name: ''
+    name: '',
+    message: 'Name is required for folder. Validation Failed.',
+    isError: false
   }
 
   handleNameChange = e => {
@@ -24,7 +26,7 @@ export default class AddFolder extends Component {
     let nameError = this.validateName();
     if (nameError){
       console.log(nameError);
-      return;
+      return 
     }
     const folder = {
       //name: e.target['folder-name'].value
@@ -53,6 +55,7 @@ export default class AddFolder extends Component {
 
   validateName(){
     if(!this.state.name) {
+      this.setState({isError:true})
       return new Error(`Name is required for folder. Validation Failed`);
     }
   }
@@ -73,6 +76,7 @@ export default class AddFolder extends Component {
               Add folder
             </button>
           </div>
+          {this.state.isError && <h1>{this.state.message}</h1>}
         </NotefulForm>
       </section>
     )
