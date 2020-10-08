@@ -10,6 +10,7 @@ import AddNote from '../AddNote/AddNote'
 import ApiContext from '../ApiContext'
 import config from '../config'
 import './App.css'
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 
 class App extends Component {
   state = {
@@ -130,6 +131,7 @@ class App extends Component {
       deleteNote: this.handleDeleteNote,
     }
     return (
+      <ErrorBoundary>
       <ApiContext.Provider value={value}>
         <div className='App'>
           <nav className='App__nav'>
@@ -147,6 +149,7 @@ class App extends Component {
           </main>
         </div>
       </ApiContext.Provider>
+      </ErrorBoundary>
     )
   }
 }

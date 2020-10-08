@@ -3,6 +3,7 @@ import NotefulForm from '../NotefulForm/NotefulForm'
 import ApiContext from '../ApiContext'
 import config from '../config'
 import './AddNote.css'
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
 
 export default class AddNote extends Component {
   static defaultProps = {
@@ -18,10 +19,24 @@ export default class AddNote extends Component {
     isError: false
   }
 
+  handleNameChange = e => {
+    this.setState({name: e.currentTarget.value});
+  }
+
+  
+
   handleSubmit = e => {
+
     e.preventDefault()
+    let nameError = this.validateName();
+    if (nameError){
+      console.log(nameError);
+      return 
+    }
+    
     const newNote = {
-      name: e.target['note-name'].value,
+      name: this.state.name,
+      //name: e.target['note-name'].value,
       content: e.target['note-content'].value,
       folderId: e.target['note-folder-id'].value,
       modified: new Date(),
@@ -47,17 +62,25 @@ export default class AddNote extends Component {
       })
   }
 
+  validateName(){
+    if(!this.state.name) {
+      this.setState({isError:true})
+      return new Error(`Name is required for folder. Validation Failed`);
+    }
+  }
+
   render() {
     const { folders=[] } = this.context
     return (
       <section className='AddNote'>
         <h2>Create a note</h2>
+      
         <NotefulForm onSubmit={this.handleSubmit}>
           <div className='field'>
             <label htmlFor='note-name-input'>
               Name
             </label>
-            <input type='text' id='note-name-input' name='note-name' />
+            <input type='text' value={this.state.name} onChange={this.handleNameChange} id='note-name-input' name='note-name' />
           </div>
           <div className='field'>
             <label htmlFor='note-content-input'>
@@ -83,7 +106,9 @@ export default class AddNote extends Component {
               Add note
             </button>
           </div>
+          {this.state.isError && <h1>{this.state.message}</h1>}
         </NotefulForm>
+    
       </section>
     )
   }
