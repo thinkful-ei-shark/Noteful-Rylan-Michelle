@@ -1,8 +1,11 @@
 import React from 'react'
 import './NotefulForm.css'
+import propTypes from 'prop-types'
 
-export default function NotefulForm(props) {
-  const { className, ...otherProps } = props
+class NotefulForm extends React.Component {
+  render(){
+  const { className, ...otherProps } = this.props
+
   return (
     <form
       className={['Noteful-form', className].join(' ')}
@@ -10,4 +13,22 @@ export default function NotefulForm(props) {
       {...otherProps}
     />
   )
+  }
 }
+
+NotefulForm.propTypes = {
+  /*
+  value: (props, propName, componentName) => {
+    // first get the value of the prop
+    const prop = props[propName];
+
+    // since we want to make this required let us check that first
+    if(!prop) {
+      return new Error(`${propName} is required in ${componentName}. Validation Failed`);
+    }
+  }
+  */
+  
+};
+
+export default NotefulForm

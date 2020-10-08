@@ -11,11 +11,24 @@ export default class AddFolder extends Component {
     },
   }
   static contextType = ApiContext;
+  state = {
+    name: ''
+  }
+
+  handleNameChange = e => {
+    this.setState({name: e.currentTarget.value});
+  }
 
   handleSubmit = e => {
     e.preventDefault()
+    let nameError = this.validateName();
+    if (nameError){
+      console.log(nameError);
+      return;
+    }
     const folder = {
-      name: e.target['folder-name'].value
+      //name: e.target['folder-name'].value
+      name: this.state.name
     }
     fetch(`${config.API_ENDPOINT}/folders`, {
       method: 'POST',
@@ -38,6 +51,12 @@ export default class AddFolder extends Component {
       })
   }
 
+  validateName(){
+    if(!this.state.name) {
+      return new Error(`Name is required for folder. Validation Failed`);
+    }
+  }
+
   render() {
     return (
       <section className='AddFolder'>
@@ -47,7 +66,7 @@ export default class AddFolder extends Component {
             <label htmlFor='folder-name-input'>
               Name
             </label>
-            <input type='text' id='folder-name-input' name='folder-name' />
+            <input value={this.state.name} onChange={this.handleNameChange} type='text' id='folder-name-input' name='folder-name' />
           </div>
           <div className='buttons'>
             <button type='submit'>
