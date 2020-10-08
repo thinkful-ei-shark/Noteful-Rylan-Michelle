@@ -3,7 +3,7 @@ import NotefulForm from '../NotefulForm/NotefulForm'
 import ApiContext from '../ApiContext'
 import config from '../config'
 import './AddNote.css'
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary'
+
 
 export default class AddNote extends Component {
   static defaultProps = {
@@ -15,22 +15,32 @@ export default class AddNote extends Component {
 
   state = {
     name: '',
-    message: 'Name is required for note. Validation Failed.',
-    isError: false
+    nameMessage: 'Name is required for note. Validation Failed.',
+    contentMessage: 'Content is required for note. Validation Failed.',
+    isNameError: false,
+    isContentError: false,
+    content: ''
   }
 
   handleNameChange = e => {
     this.setState({name: e.currentTarget.value});
   }
 
-  
+  handleContentChange = e => {
+    this.setState({content: e.currentTarget.value});
+  }
 
   handleSubmit = e => {
 
     e.preventDefault()
     let nameError = this.validateName();
+    let contentError = this.validateContent();
     if (nameError){
       console.log(nameError);
+      return 
+    }
+    if (contentError){
+      console.log(contentError);
       return 
     }
     
@@ -69,6 +79,12 @@ export default class AddNote extends Component {
     }
   }
 
+  validateContent(){
+    if(!this.state.content) {
+      this.setState({isError:true})
+      return new Error(`Content is required for folder. Validation Failed`);
+    }
+  }
   render() {
     const { folders=[] } = this.context
     return (
@@ -86,7 +102,7 @@ export default class AddNote extends Component {
             <label htmlFor='note-content-input'>
               Content
             </label>
-            <textarea id='note-content-input' name='note-content' />
+            <textarea id='note-content-input' value={this.state.content} onChange={this.handleContentChange} name='note-content' />
           </div>
           <div className='field'>
             <label htmlFor='note-folder-select'>
@@ -106,7 +122,8 @@ export default class AddNote extends Component {
               Add note
             </button>
           </div>
-          {this.state.isError && <h1>{this.state.message}</h1>}
+          {this.state.isError && <h2>{this.state.nameMessage}</h2>}
+          {this.state.isError && <h2>{this.state.contentMessage}</h2>}
         </NotefulForm>
     
       </section>
