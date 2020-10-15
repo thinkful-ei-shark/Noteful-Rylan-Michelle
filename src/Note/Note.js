@@ -8,7 +8,7 @@ import './Note.css'
 import PropTypes from 'prop-types';
 
 export default class Note extends React.Component {
-  static defaultProps ={
+  static defaultProps = {
     onDeleteNote: () => {},
   }
   static contextType = ApiContext;

@@ -3,7 +3,7 @@ import NotefulForm from '../NotefulForm/NotefulForm'
 import ApiContext from '../ApiContext'
 import config from '../config'
 import './AddNote.css'
-
+import PropTypes from 'prop-types'
 
 export default class AddNote extends Component {
   static defaultProps = {
@@ -24,10 +24,12 @@ export default class AddNote extends Component {
 
   handleNameChange = e => {
     this.setState({name: e.currentTarget.value});
+    this.setState({nameMessage: ''});
   }
 
   handleContentChange = e => {
     this.setState({content: e.currentTarget.value});
+    this.setState({contentMessage: ''});
   }
 
   handleSubmit = e => {
@@ -75,6 +77,7 @@ export default class AddNote extends Component {
   validateName(){
     if(!this.state.name) {
       this.setState({isError:true})
+      this.setState({nameMessage: 'Name is required for folder. Validation Failed'});
       return new Error(`Name is required for folder. Validation Failed`);
     }
   }
@@ -82,6 +85,7 @@ export default class AddNote extends Component {
   validateContent(){
     if(!this.state.content) {
       this.setState({isError:true})
+      this.setState({contentMessage: 'Content is required for folder. Validation Failed'});
       return new Error(`Content is required for folder. Validation Failed`);
     }
   }
@@ -129,4 +133,8 @@ export default class AddNote extends Component {
       </section>
     )
   }
+}
+
+AddNote.propTypes = {
+  history: PropTypes.string.isRequired
 }

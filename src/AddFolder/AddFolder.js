@@ -3,6 +3,7 @@ import NotefulForm from '../NotefulForm/NotefulForm'
 import ApiContext from '../ApiContext'
 import config from '../config'
 import './AddFolder.css'
+import PropTypes from 'prop-types'
 
 export default class AddFolder extends Component {
   static defaultProps = {
@@ -19,6 +20,7 @@ export default class AddFolder extends Component {
 
   handleNameChange = e => {
     this.setState({name: e.currentTarget.value});
+    this.setState({message: ''});
   }
 
   handleSubmit = e => {
@@ -56,6 +58,7 @@ export default class AddFolder extends Component {
   validateName(){
     if(!this.state.name) {
       this.setState({isError:true})
+      this.setState({message: 'Name is required for folder. Validation Failed.'});
       return new Error(`Name is required for folder. Validation Failed`);
     }
   }
@@ -81,4 +84,8 @@ export default class AddFolder extends Component {
       </section>
     )
   }
+}
+
+AddFolder.propTypes = {
+  history: PropTypes.string.isRequired
 }
