@@ -1,5 +1,6 @@
 import React from 'react'
 import './NotefulForm.css'
+import Proptypes from 'prop-types'
 
 class NotefulForm extends React.Component {
   render(){
@@ -7,7 +8,7 @@ class NotefulForm extends React.Component {
 
   return (
     <form
-      className={['Noteful-form', className].join(' ')}
+      className={['Noteful-form', className].join(' ')} 
       action='#'
       {...otherProps}
     />
@@ -16,3 +17,7 @@ class NotefulForm extends React.Component {
 }
 
 export default NotefulForm
+
+NotefulForm.Proptypes = {
+  onSubmit: Proptypes.func.isRequired
+}

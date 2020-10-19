@@ -66,8 +66,6 @@ class App extends Component {
     })
   }
 
-
-
   renderNavRoutes() {
     return (
       <>

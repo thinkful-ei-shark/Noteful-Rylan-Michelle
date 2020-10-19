@@ -136,5 +136,7 @@ export default class AddNote extends Component {
 }
 
 AddNote.propTypes = {
-  history: PropTypes.string.isRequired
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired
 }
